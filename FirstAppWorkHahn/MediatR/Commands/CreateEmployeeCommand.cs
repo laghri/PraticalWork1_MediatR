@@ -5,6 +5,6 @@ namespace FirstAppWorkHahn.MediatR.Commands
 {
    public class CreateEmployeeCommand : IRequest<Employes>
     {
-        public Employes employes { get; set; }
+        public Employes? employes { get; set; }
     }
 }

@@ -59,14 +59,24 @@ namespace FirstAppWorkHahn.Repositores
             return employes;
         }
 
-        async   Task IGenericRepository<Employes>.Update(Guid Id,Employes employes)
+        async   Task IGenericRepository<Employes>.Update(Employes employes)
         {
-          
 
-            _context.Entry(employes).State = EntityState.Modified;
+            var existingEmployee = _context.Employes.Find(employes.Id);
 
-           
+
+            existingEmployee.Name = employes.Name;
+                existingEmployee.Salaire = employes.Salaire;
+                existingEmployee.Specialite = employes.Specialite;
+                
+                _context.Entry(existingEmployee).State = EntityState.Modified;
+
+
                 await _context.SaveChangesAsync();
+
+               
+               
+               
             
             }
 

@@ -9,7 +9,7 @@ using NuGet.Protocol.Core.Types;
 
 namespace FirstAppWorkHahn.MediatR.Handlers
 {
-    public class DeleteEmployeHandler:IRequestHandler<DeleteEmployeCommande,Employes>
+    public class DeleteEmployeHandler:IRequestHandler<DeleteEmployeCommande,Guid>
     {
         private readonly IGenericRepository<Employes> _employesRepository;
         public DeleteEmployeHandler(IGenericRepository<Employes> employesRepository)
@@ -18,13 +18,13 @@ namespace FirstAppWorkHahn.MediatR.Handlers
         }
 
 
-         async Task<Employes> IRequestHandler<DeleteEmployeCommande, Employes>.Handle(DeleteEmployeCommande request, CancellationToken cancellationToken)
+         async Task<Guid> IRequestHandler<DeleteEmployeCommande, Guid>.Handle(DeleteEmployeCommande request, CancellationToken cancellationToken)
         {
             var ExistingEmploye = await _employesRepository.GetById(request.Id);
-            if (ExistingEmploye != null)
-
-                await _employesRepository.Delete(request.Id);
-            return ExistingEmploye;
+            if (ExistingEmploye == null)
+              return default;
+            await _employesRepository.Delete(request.Id);
+            return ExistingEmploye.Id;
         }
     }
 }

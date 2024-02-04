@@ -18,11 +18,8 @@ namespace FirstAppWorkHahn.MediatR.Handlers
 
         public async Task<List<Employes>> Handle(GetAllEmployesQuery request, CancellationToken cancellationToken)
         {
-            List<Employes> employees = (List<Employes>)await _employesRepository.GetAll();
 
-            
-
-            return employees;
+         return (List<Employes>)await _employesRepository.GetAll();
         }
 
       

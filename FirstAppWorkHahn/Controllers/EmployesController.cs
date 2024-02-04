@@ -17,43 +17,57 @@ namespace FirstAppWorkHahn.Controllers
             _mediator = mediator;
         }
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddEmploye(Employes employes)
         {
+            
             var employesCommand = new CreateEmployeeCommand() { employes = employes };
-            var empl = await _mediator.Send(employesCommand);
-            return Ok(empl);
+            try
+            {
+             
+                return Ok(await _mediator.Send(employesCommand));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
         [HttpGet("{id}")]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetEmployeById(Guid id)
         {
             var employeQuery = new GetEmployeeByIdQuery() { Id = id };
-            var Employe = await _mediator.Send(employeQuery);
-            if (Employe != null)
+         
+            try 
             {
-                return Ok(Employe);
+                return Ok(await _mediator.Send(employeQuery));
             }
-            else
+            catch(Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex.Message);
             }
 
 
 
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateEmploye(Guid id, Employes employes)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateEmploye( Employes employes)
         {
-            var EmployeCommande = new UpdateEmployesCommand() { Id = id, employes = employes };
+            var EmployeCommande = new UpdateEmployesCommand() { employes = employes };
 
-            var Employe = await _mediator.Send(EmployeCommande);
-            if (Employe != null)
+          
+            try
             {
-                return Ok(Employe);
+                return Ok(await _mediator.Send(EmployeCommande));
             }
-            else
+            catch( Exception ex) 
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
 
@@ -62,25 +76,36 @@ namespace FirstAppWorkHahn.Controllers
 
         }
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteEmploye(Guid id)
         {
             var EmployeCommande = new DeleteEmployeCommande() { Id = id };
-            var Employe = await _mediator.Send(EmployeCommande);
-            if (Employe != null)
+            
+            try
             {
-                return Ok("Delete seccussufly");
+                return Ok(await _mediator.Send(EmployeCommande));
             }
-            else
+            catch(Exception ex)
             {
-                return BadRequest("SomeThingWrong");
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllEmployes()
         {
-            var EmployeQuery = new GetAllEmployesQuery() { };
-            List<Employes> Employes = await _mediator.Send(EmployeQuery);
-            return Ok(Employes);
+            
+            try
+            {
+                return Ok(await _mediator.Send(new GetAllEmployesQuery() { }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+       
             }
     }
 }

@@ -1,0 +1,6 @@
+@FirstAppWorkHahn_HostAddress = http://localhost:5016
+
+GET {{FirstAppWorkHahn_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

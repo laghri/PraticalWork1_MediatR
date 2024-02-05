@@ -49,7 +49,10 @@ namespace FirstAppWorkHahn.Controllers
           
             try 
             {
-                return Ok(await _mediator.Send(new GetEmployeeByIdQuery() { Id=id} ));
+                var em = await _mediator.Send(new GetEmployeeByIdQuery() { Id = id });
+                if (em == null)
+                    return BadRequest("Employe does'nt Exist");
+                return Ok(em);
             }
             catch(Exception ex)
             {
@@ -73,11 +76,11 @@ namespace FirstAppWorkHahn.Controllers
                 return BadRequest(ex.Message);
             }
           }
-        [HttpDelete("{id}")]
+        [HttpDelete()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteEmploye(DeleteEmployeCommande DeleteCommande)
-        {
+        public async Task<IActionResult> DeleteEmploye(  DeleteEmployeCommande DeleteCommande)
+        { 
             try
             {
                 return Ok(await _mediator.Send(DeleteCommande));

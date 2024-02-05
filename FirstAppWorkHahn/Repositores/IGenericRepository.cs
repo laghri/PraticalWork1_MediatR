@@ -8,7 +8,7 @@ namespace FirstAppWorkHahn.Repositores
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(Guid id);
         Task<Employes> Add(TEntity entity);
-        Task Update(TEntity entity);
+        Task<Boolean> Update(TEntity entity);
         Task Delete(Guid id);
     }
 

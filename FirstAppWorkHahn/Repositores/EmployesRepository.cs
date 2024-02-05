@@ -2,6 +2,7 @@
 using FirstAppWorkHahn.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace FirstAppWorkHahn.Repositores
@@ -59,25 +60,37 @@ namespace FirstAppWorkHahn.Repositores
             return employes;
         }
 
-        async   Task IGenericRepository<Employes>.Update(Employes employes)
+        async   Task<Boolean> IGenericRepository<Employes>.Update(Employes employes)
         {
 
             var existingEmployee = _context.Employes.Find(employes.Id);
 
-
-            existingEmployee.Name = employes.Name;
+            if (existingEmployee != null)
+            {
+                existingEmployee.Name = employes.Name;
                 existingEmployee.Salaire = employes.Salaire;
                 existingEmployee.Specialite = employes.Specialite;
-                
+
                 _context.Entry(existingEmployee).State = EntityState.Modified;
 
 
                 await _context.SaveChangesAsync();
+                return true;
+            }
 
-               
-               
-               
-            
+
+            else
+            {
+                return false;
+            }
+     
+
+
+
+
+
+
+
             }
 
             

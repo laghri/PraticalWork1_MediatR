@@ -18,7 +18,11 @@ namespace FirstAppWorkHahn.MediatR.Handlers
         }
         public async Task<Employes> Handle(CreateEmployeeCommand command,CancellationToken cancellationToken)
         {
-                   return  await _employesRepository.Add(command.employes);
+            var Em = new Employes();
+            Em.Name = command.Name;
+            Em.Salaire = command.Salaire;
+            Em.Specialite = command.Specialite;
+            return  await _employesRepository.Add(Em);
         }
 
 

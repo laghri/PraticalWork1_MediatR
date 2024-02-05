@@ -5,7 +5,10 @@ namespace FirstAppWorkHahn.MediatR.Commands
 {
     public class UpdateEmployesCommand: IRequest<Employes>
     {
-        public Employes ?employes { get; set; }
-      
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+        public double Salaire { get; set; }
+        public string? Specialite { get; set; }
+
     }
 }

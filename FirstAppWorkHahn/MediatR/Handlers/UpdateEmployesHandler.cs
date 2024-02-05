@@ -19,9 +19,13 @@ namespace FirstAppWorkHahn.MediatR.Handlers
 
          async Task<Employes> IRequestHandler<UpdateEmployesCommand, Employes>.Handle(UpdateEmployesCommand command, CancellationToken cancellationToken)
         {
-           
-            await _employesRepository.Update( command.employes); ;
-              return command.employes;
+            var Em = new Employes();
+            Em.Id = command.Id;
+            Em.Name= command.Name;
+            Em.Salaire = command.Salaire;
+            Em.Specialite= command.Specialite;
+            await _employesRepository.Update(Em); ;
+              return Em;
         }
     }
 }

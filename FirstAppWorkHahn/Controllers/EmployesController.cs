@@ -19,14 +19,12 @@ namespace FirstAppWorkHahn.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddEmploye(Employes employes)
+        public async Task<IActionResult> AddEmploye(CreateEmployeeCommand CommandCreate)
         {
-            
-            var employesCommand = new CreateEmployeeCommand() { employes = employes };
-            try
+             try
             {
              
-                return Ok(await _mediator.Send(employesCommand));
+                return Ok(await _mediator.Send(CommandCreate));
             }
             catch(Exception ex)
             {
@@ -39,11 +37,10 @@ namespace FirstAppWorkHahn.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetEmployeById(Guid id)
         {
-            var employeQuery = new GetEmployeeByIdQuery() { Id = id };
-         
+          
             try 
             {
-                return Ok(await _mediator.Send(employeQuery));
+                return Ok(await _mediator.Send(new GetEmployeeByIdQuery() { Id=id} ));
             }
             catch(Exception ex)
             {
@@ -56,35 +53,25 @@ namespace FirstAppWorkHahn.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateEmploye( Employes employes)
+        public async Task<IActionResult> UpdateEmploye(UpdateEmployesCommand UpdateCommande)
         {
-            var EmployeCommande = new UpdateEmployesCommand() { employes = employes };
-
-          
             try
             {
-                return Ok(await _mediator.Send(EmployeCommande));
+                return Ok(await _mediator.Send(UpdateCommande));
             }
             catch( Exception ex) 
             {
                 return BadRequest(ex.Message);
             }
-
-
-
-
-
-        }
+          }
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteEmploye(Guid id)
+        public async Task<IActionResult> DeleteEmploye(DeleteEmployeCommande DeleteCommande)
         {
-            var EmployeCommande = new DeleteEmployeCommande() { Id = id };
-            
             try
             {
-                return Ok(await _mediator.Send(EmployeCommande));
+                return Ok(await _mediator.Send(DeleteCommande));
             }
             catch(Exception ex)
             {
@@ -94,10 +81,9 @@ namespace FirstAppWorkHahn.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllEmployes()
+        public async Task<IActionResult> GetAllEmployes( )
         {
-            
-            try
+          try
             {
                 return Ok(await _mediator.Send(new GetAllEmployesQuery() { }));
             }

@@ -13,8 +13,6 @@ builder.Services.AddDbContext<FirstAppWorkHahnContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IGenericRepository<Employes>, EmployesRepository>();
-/* why this give an error !!!!!!!!!!!!!!!!*/
-/*builder.Services.AddMediatR(typeof(Program));*/
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

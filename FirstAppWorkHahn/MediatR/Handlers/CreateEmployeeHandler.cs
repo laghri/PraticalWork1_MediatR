@@ -22,6 +22,7 @@ namespace FirstAppWorkHahn.MediatR.Handlers
             Em.Name = command.Name;
             Em.Salaire = command.Salaire;
             Em.Specialite = command.Specialite;
+
             return  await _employesRepository.Add(Em);
         }
 

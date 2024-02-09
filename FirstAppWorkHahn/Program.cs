@@ -26,11 +26,13 @@ internal class Program
                   x.RegisterValidatorsFromAssemblyContaining<Program>()
                 );
 
+ 
 
         builder.Services.AddScoped<IGenericRepository<Employes>, EmployesRepository>();
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+       builder.Services.AddCors();
 
         var app = builder.Build();
 
@@ -41,6 +43,9 @@ internal class Program
             app.UseSwaggerUI();
         }
 
+        app.UseCors(options =>
+   options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+      
         app.UseHttpsRedirection();
 
         app.UseAuthorization();

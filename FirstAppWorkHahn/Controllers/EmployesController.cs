@@ -76,14 +76,14 @@ namespace FirstAppWorkHahn.Controllers
                 return BadRequest(ex.Message);
             }
           }
-        [HttpDelete()]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteEmploye(  DeleteEmployeCommande DeleteCommande)
+        public async Task<IActionResult> DeleteEmploye(Guid id)
         { 
             try
             {
-                return Ok(await _mediator.Send(DeleteCommande));
+                return Ok(await _mediator.Send(new DeleteEmployeCommande() { Id=id}));
             }
             catch(Exception ex)
             {
